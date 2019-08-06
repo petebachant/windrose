@@ -84,14 +84,15 @@ class WindroseAxes(PolarAxes):
         self.cla()
 
     @staticmethod
-    def from_ax(ax=None, fig=None, rmax=None, *args, **kwargs):
+    def from_ax(ax=None, fig=None, rmax=None, figsize=FIGSIZE_DEFAULT, *args,
+                **kwargs):
         """
         Return a WindroseAxes object for the figure `fig`.
         """
         if ax is None:
             if fig is None:
                 fig = plt.figure(
-                    figsize=FIGSIZE_DEFAULT,
+                    figsize=figsize,
                     dpi=DPI_DEFAULT,
                     facecolor="w",
                     edgecolor="w",
@@ -751,36 +752,36 @@ def histogram(direction, var, bins, nsector, normed=False, blowto=False):
 
 
 @docstring.copy(WindroseAxes.contour)
-def wrcontour(direction, var, ax=None, rmax=None, **kwargs):
+def wrcontour(direction, var, ax=None, rmax=None, figsize=FIGSIZE_DEFAULT, **kwargs):
     """
     Draw contour probability density function and return Weibull
     distribution parameters.
     """
-    ax = WindroseAxes.from_ax(ax, rmax=rmax)
+    ax = WindroseAxes.from_ax(ax, rmax=rmax, figsize=figsize)
     ax.contour(direction, var, **kwargs)
     ax.set_legend()
     return ax
 
 
 @docstring.copy(WindroseAxes.contourf)
-def wrcontourf(direction, var, ax=None, rmax=None, **kwargs):
-    ax = WindroseAxes.from_ax(ax, rmax=rmax)
+def wrcontourf(direction, var, ax=None, rmax=None, figsize=FIGSIZE_DEFAULT, **kwargs):
+    ax = WindroseAxes.from_ax(ax, rmax=rmax, figsize=figsize)
     ax.contourf(direction, var, **kwargs)
     ax.set_legend()
     return ax
 
 
 @docstring.copy(WindroseAxes.box)
-def wrbox(direction, var, ax=None, rmax=None, **kwargs):
-    ax = WindroseAxes.from_ax(ax, rmax=rmax)
+def wrbox(direction, var, ax=None, rmax=None, figsize=FIGSIZE_DEFAULT, **kwargs):
+    ax = WindroseAxes.from_ax(ax, rmax=rmax, figsize=figsize)
     ax.box(direction, var, **kwargs)
     ax.set_legend()
     return ax
 
 
 @docstring.copy(WindroseAxes.bar)
-def wrbar(direction, var, ax=None, rmax=None, **kwargs):
-    ax = WindroseAxes.from_ax(ax, rmax=rmax)
+def wrbar(direction, var, ax=None, rmax=None, figsize=FIGSIZE_DEFAULT, **kwargs):
+    ax = WindroseAxes.from_ax(ax, rmax=rmax, figsize=figsize)
     ax.bar(direction, var, **kwargs)
     ax.set_legend()
     return ax
@@ -796,6 +797,7 @@ def wrpdf(
     Nbins=10,
     ax=None,
     rmax=None,
+    figsize=FIGSIZE_DEFAULT,
     *args,
     **kwargs
 ):
@@ -803,16 +805,17 @@ def wrpdf(
     Draw probability density function and return Weitbull distribution
     parameters
     """
-    ax = WindAxes.from_ax(ax)
+    ax = WindAxes.from_ax(ax, figsize=figsize)
     ax, params = ax.pdf(var, bins, Nx, bar_color, plot_color, Nbins, *args, **kwargs)
     return (ax, params)
 
 
-def wrscatter(direction, var, ax=None, rmax=None, *args, **kwargs):
+def wrscatter(direction, var, ax=None, rmax=None, figsize=FIGSIZE_DEFAULT,
+              *args, **kwargs):
     """
     Draw scatter plot
     """
-    ax = WindroseAxes.from_ax(ax, rmax=rmax)
+    ax = WindroseAxes.from_ax(ax, rmax=rmax, figsize=figsize)
     direction = -np.array(direction) + np.radians(90)
     ax.scatter(direction, var, *args, **kwargs)
     return ax
